@@ -1,0 +1,72 @@
+\documentclass{article}
+
+\usepackage{threeparttable}
+\usepackage{pgfplotstable}
+\usepackage{booktabs}
+
+
+\pgfplotstableset{row sep=newline,col sep=comma,skip first n=0,header=true}
+\pgfplotstableset{
+  columns/Dataset/.style={string type},
+  columns/Isovalue/.style={string type},
+  columns/numActiveCubes/.style={string type},
+  columns/numCubesWithAmbigFacets/.style={string type},
+  columns/numAmbigGridFacets/.style={string type},
+  columns/numCubesWithMultiIsov/.style={string type},
+  columns/numCubesWithIsotableIndexChange/.style={string type},
+  every head row/.style={output empty row},
+  }
+
+\providecommand{\emath}[1] {\ensuremath{#1}}
+\newcounter {fncounter}
+\setcounter {fncounter}{1}
+\newcommand {\fnK}[1]      {\setcounter{fncounter}{#1}
+                            \emath{\fnsymbol{fncounter}}}
+\newcommand {\fnI}         {\fnK{1}}
+\newcommand {\fnII}        {\fnK{2}}
+\newcommand {\fnIII}       {\fnK{3}}
+
+% Abbreviations
+\newcommand{\with}         {w\textbackslash}               % Abbreviation w\
+
+
+\begin{document}
+
+\begin{table*}[p]
+\centering
+\begin{threeparttable}
+\centering
+\begin{minipage}{\textwidth}
+
+
+\pgfplotstabletypeset[
+  begin table={
+    \begin{tabular}{lrrrrrr}
+    \toprule
+        & &           & \# Cubes & \# Ambig 
+          &           & \# Cubes \\
+        & & \# Active & \with Ambig         & Grid 
+          & \# Cubes & \with Config \\
+        Dataset & Isovalue & cubes & Facets & Facets
+            & \with MultiV & Changes \\
+    \midrule
+  },
+  end table={
+    \bottomrule
+    \end{tabular}
+  },
+]{table_DC_multi_isov.csv}
+
+\begin{tablenotes}
+\item[\fnII] Isovalue for skin.
+\item[\fnIII] Isovalue for skeleton.
+\end{tablenotes}
+
+\end{minipage}
+\caption{Dual contouring multiple isosurface vertices per cube statistics.}
+\end{threeparttable}
+\end{table*}
+
+
+\end{document}
+
