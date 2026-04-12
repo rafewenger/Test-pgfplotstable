@@ -39,6 +39,7 @@
 \begin{minipage}{\textwidth}
 
 
+\makeatletter
 \pgfplotstabletypeset[
   begin table={\begin{tabular}{lrrrrrr}
     \toprule
@@ -50,11 +51,13 @@
             & \with MultiV & Changes \\
     \midrule
     \@gobble},
+  every row/.style={after row=\midrule},
   end table={
     \bottomrule
     \end{tabular}
   },
 ]{table_DC_multi_isov.csv}
+\makeatother
 
 \begin{tablenotes}
 \item[\fnII] Isovalue for skin.
