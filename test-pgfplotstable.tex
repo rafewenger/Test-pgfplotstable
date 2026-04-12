@@ -40,8 +40,7 @@
 
 
 \pgfplotstabletypeset[
-  begin table={\def\pgfplotsTableColSpec{##1}%
-    \begin{tabular}{lrrrrrr}
+  begin table={\begin{tabular}{lrrrrrr}
     \toprule
         & &           & \# Cubes & \# Ambig 
           &           & \# Cubes \\
@@ -50,7 +49,7 @@
         Dataset & Isovalue & cubes & Facets & Facets
             & \with MultiV & Changes \\
     \midrule
-  },
+    \@gobble},
   end table={
     \bottomrule
     \end{tabular}
