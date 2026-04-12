@@ -29,13 +29,12 @@
   begin table={\begin{tabular}{lrrrrrr}
     \toprule
     #1
-    \toprule
+    \midrule
     \@gobble},
   end table={
     \bottomrule
-    \end{tabular},
+    \end{tabular}
   },
-  before row={\midrule}
 ]{#2}
 \makeatother
 }
