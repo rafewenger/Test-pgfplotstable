@@ -5,10 +5,7 @@
 \usepackage{booktabs}
 
 
-\pgfplotstableset{row sep=newline,col sep=comma,skip first n=0,header=true}
-\pgfplotstableset{
-  every head row/.style={output empty row},
-  }
+\pgfplotstableset{row sep=newline,col sep=comma}
 
 \providecommand{\emath}[1] {\ensuremath{#1}}
 \newcounter {fncounter}
@@ -23,23 +20,21 @@
 \newcommand{\with}         {w\textbackslash}               % Abbreviation w\
 
 \newcommand{\includepgfplotstable}[2]{
-\makeatletter
 \pgfplotstabletypeset[
   string type,
+  header=false,
+  skip first n=1,
   begin table={\begin{tabular}{lrrrrrr}
     \toprule
     #1
-    \midrule
-    \@gobble},
+    \midrule},
   end table={
     \bottomrule
     \end{tabular}
   },
   after row={\midrule},
-  every head row/.style={output empty row, after row={}},
   every last row/.style={after row={}}
 ]{#2}
-\makeatother
 }
 
 \begin{document}
