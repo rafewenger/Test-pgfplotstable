@@ -40,7 +40,7 @@
 
 
 \pgfplotstabletypeset[
-  begin table={
+  begin table={\def\pgfplotsTableColSpec{##1}%
     \begin{tabular}{lrrrrrr}
     \toprule
         & &           & \# Cubes & \# Ambig 
