@@ -1,0 +1,72 @@
+\documentclass{article}
+
+\usepackage{threeparttable}
+\usepackage{pgfplotstable}
+\usepackage{booktabs}
+
+
+\pgfplotstableset{row sep=newline,col sep=comma,skip first n=0,header=true}
+\pgfplotstableset{
+  every head row/.style={output empty row},
+  }
+
+\providecommand{\emath}[1] {\ensuremath{#1}}
+\newcounter {fncounter}
+\setcounter {fncounter}{1}
+\newcommand {\fnK}[1]      {\setcounter{fncounter}{#1}
+                            \emath{\fnsymbol{fncounter}}}
+\newcommand {\fnI}         {\fnK{1}}
+\newcommand {\fnII}        {\fnK{2}}
+\newcommand {\fnIII}       {\fnK{3}}
+
+% Abbreviations
+\newcommand{\with}         {w\textbackslash}               % Abbreviation w\
+
+\newcommand{\includepgfplotstable}[2]{
+\makeatletter
+\pgfplotstabletypeset[
+  string type,
+  begin table={\begin{tabular}{lrrrrrr}
+    \toprule
+    #1
+    \toprule
+    \@gobble},
+  end table={
+    \bottomrule
+    \end{tabular},
+  },
+  before row={\midrule}
+]{#2}
+\makeatother
+}
+
+\begin{document}
+
+\begin{table*}[p]
+\centering
+\begin{threeparttable}
+\centering
+\begin{minipage}{\textwidth}
+
+\includepgfplotstable{
+        & &           & \# Cubes & \# Ambig 
+          &           & \# Cubes \\
+        & & \# Active & \with Ambig         & Grid 
+          & \# Cubes & \with Config \\
+        Dataset & Isovalue & cubes & Facets & Facets
+            & \with MultiV & Changes \\
+}{table_DC_multi_isov.csv}
+
+\begin{tablenotes}
+\item[\fnII] Isovalue for skin.
+\item[\fnIII] Isovalue for skeleton.
+\end{tablenotes}
+
+\end{minipage}
+\caption{Dual contouring multiple isosurface vertices per cube statistics.}
+\end{threeparttable}
+\end{table*}
+
+
+\end{document}
+
