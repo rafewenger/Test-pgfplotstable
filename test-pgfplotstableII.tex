@@ -18,6 +18,7 @@
 
 % Abbreviations
 \newcommand{\with}         {w\textbackslash}               % Abbreviation w\
+\newcommand{\gobblearg}[1]{}                               % Discard one argument
 
 \newcommand{\includepgfplotstable}[2]{
 \pgfplotstabletypeset[
@@ -27,7 +28,7 @@
   begin table={\begin{tabular}{lrrrrrr}
     \toprule
     #1
-    \midrule\@gobble},
+    \midrule\gobblearg},
   end table={
     \bottomrule
     \end{tabular}
