@@ -1,0 +1,55 @@
+\documentclass{article}
+
+\usepackage{threeparttable}
+\usepackage{pgfplotstable}
+\usepackage{booktabs}
+
+
+\pgfplotstableset{row sep=newline,col sep=comma}
+
+\newcommand{\gobblearg}[1]{}
+
+\newcommand{\includepgfplotstable}[5]{
+\centering
+\begin{minipage}{\textwidth}
+\pgfplotstabletypeset[
+  header=false,
+  skip first n=1,
+  #1,
+  begin table={\begin{tabular}{#2}
+    \toprule
+    #3
+    \midrule\gobblearg},  
+  end table={
+    \bottomrule
+    \end{tabular}
+  },
+  every head row/.style={output empty row, after row={}},
+%  after row={\midrule},
+  every last row/.style={after row={}}
+]{#4}
+#5
+\end{minipage}
+}
+
+\begin{document}
+
+\begin{table*}[p]
+\centering
+\setlength{\tabcolsep}{5pt}
+\makebox[\textwidth][c]{
+\begin{threeparttable}
+\centering
+\includepgfplotstable{numeric type,
+  fixed}{rrrrrrrrr}{ 
+      \multicolumn{9}{|c|}{CPU Time (seconds)} \\
+}{tableIII.csv}{ }
+\caption{CPU times (in seconds) of Marching Cubes and dual contouring.}
+\end{threeparttable}
+}
+\end{table*}
+
+
+
+\end{document}
+
