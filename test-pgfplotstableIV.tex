@@ -3,6 +3,7 @@
 \usepackage{threeparttable}
 \usepackage{pgfplotstable}
 \usepackage{booktabs}
+\usepackage{xparse}
 
 
 % Set pgfplotstable
@@ -11,7 +12,7 @@
 
 \newcommand{\gobblearg}[1]{}
 
-\newcommand{\includepgfplotstable}[5]{
+\DeclareDocumentCommand{\includepgfplotstable}{>{\TrimSpaces}m m m m m}{
 \centering
 \begin{minipage}{\textwidth}
 \pgfplotstabletypeset[
@@ -42,7 +43,8 @@
 \makebox[\textwidth][c]{
 \begin{threeparttable}
 \centering
-\includepgfplotstable{numeric type,
+\includepgfplotstable{
+  numeric type,
   fixed}{rrrrrrrrr}{ 
       \multicolumn{9}{|c|}{CPU Time (seconds)} \\
 }{tableIII.csv}{ }
