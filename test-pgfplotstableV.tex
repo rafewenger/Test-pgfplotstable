@@ -1,0 +1,70 @@
+\documentclass{article}
+
+\usepackage{threeparttable}
+\usepackage{pgfplotstable}
+\usepackage{booktabs}
+\usepackage{xparse}
+
+
+% Create a ReplaceSuffix command
+\makeatletter
+\def\ReplaceSuffix#1#2{%
+  \filename@parse{#1}%
+  \edef\ReplaceSuffixResult{\filename@base.#2}%
+  \ReplaceSuffixResult
+}
+\makeatother
+
+% Set pgfplotstable
+\pgfplotsset{compat=1.18}
+\pgfplotstableset{row sep=newline,col sep=comma}
+
+\newcommand{\gobblearg}[1]{}
+
+\DeclareDocumentCommand{\includepgfplotstable}{>{\TrimSpaces}m m m m m}{
+\edef\outfiletemp{\ReplaceSuffix{#4}{tex}}%
+\centering
+\begin{minipage}{\textwidth}
+\pgfplotstabletypeset[
+  header=false,
+  skip first n=1,
+  typeset=true,
+  outfile=\outfiletemp,
+  #1,
+  begin table={\begin{tabular}{#2}
+    \toprule
+    #3
+    \midrule\gobblearg},  
+  end table={
+    \bottomrule
+    \end{tabular}
+  },
+  every head row/.style={output empty row, after row={}},
+  every last row/.style={after row={}}
+]{#4}
+#5
+\end{minipage}
+}
+
+
+\begin{document}
+
+\begin{table*}[p]
+\centering
+\setlength{\tabcolsep}{5pt}
+\makebox[\textwidth][c]{
+\begin{threeparttable}
+\centering
+\includepgfplotstable{
+  fixed}{rrrrrrrrr}{ 
+      \multicolumn{9}{|c|}{CPU Time (seconds)} \\
+}{tableIII.csv}{ }
+\caption{CPU times (in seconds) of Marching Cubes and dual contouring.}
+\end{threeparttable}
+}
+\end{table*}
+
+
+
+\end{document}
+
