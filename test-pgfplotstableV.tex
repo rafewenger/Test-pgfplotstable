@@ -20,20 +20,19 @@
 
 \newcommand{\gobblearg}[1]{}
 
-\DeclareDocumentCommand{\includepgfplotstable}{>{\TrimSpaces}m m m m m}{
-\ReplaceSuffix{#4}{tex}%
-\edef\outfiletemp{\ReplaceSuffixResult}%
+\def\saveTable{1}
+
+\DeclareDocumentCommand{\includepgfplotstable}{>{\TrimSpaces}m m m m m m}{
 \centering
 \begin{minipage}{\textwidth}
 \pgfplotstabletypeset[
   header=false,
   skip first n=1,
-  typeset=true,
-  outfile=\outfiletemp,
   #1,
-  begin table={\begin{tabular}{#2}
+  #2,
+  begin table={\begin{tabular}{#3}
     \toprule
-    #3
+    #4
     \midrule\gobblearg},  
   end table={
     \bottomrule
@@ -41,10 +40,27 @@
   },
   every head row/.style={output empty row, after row={}},
   every last row/.style={after row={}}
-]{#4}
-#5
+]{#5}
+#6
 \end{minipage}
 }
+
+\ifdefined\saveTable
+
+\DeclareDocumentCommand{\includetable}{>{\TrimSpaces}m m m m m}{
+\ReplaceSuffix{#4}{tex}
+\edef\outfiletemp{\ReplaceSuffixResult}%
+\includepgfplotstable{typeset=true,output=\outfiletemp}{#1}{#2}{#3}{#4}{#5}
+}
+
+\else
+
+\DeclareDocumentCommand{\includetable}{>{\TrimSpaces}m m m m m}{
+\includepgfplotstable{}{#1}{#2}{#3}{#4}{#5}
+}
+
+\fi
+
 
 
 \begin{document}
@@ -55,7 +71,7 @@
 \makebox[\textwidth][c]{
 \begin{threeparttable}
 \centering
-\includepgfplotstable{
+\includetable{
   fixed}{rrrrrrrrr}{ 
       \multicolumn{9}{|c|}{CPU Time (seconds)} \\
 }{tableIII.csv}{ }
