@@ -1,4 +1,4 @@
-test-pgfplotstable.aux
-test-pgfplotstable.log
-test-pgfplotstable.pdf
-test-pgfplotstable.synctex.gz
+*.aux
+*.log
+*.pdf
+*.gz
