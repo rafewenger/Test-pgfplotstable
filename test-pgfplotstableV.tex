@@ -11,7 +11,6 @@
 \def\ReplaceSuffix#1#2{%
   \filename@parse{#1}%
   \edef\ReplaceSuffixResult{\filename@base.#2}%
-  \ReplaceSuffixResult
 }
 \makeatother
 
@@ -22,7 +21,8 @@
 \newcommand{\gobblearg}[1]{}
 
 \DeclareDocumentCommand{\includepgfplotstable}{>{\TrimSpaces}m m m m m}{
-\edef\outfiletemp{\ReplaceSuffix{#4}{tex}}%
+\ReplaceSuffix{#4}{tex}%
+\edef\outfiletemp{\ReplaceSuffixResult}%
 \centering
 \begin{minipage}{\textwidth}
 \pgfplotstabletypeset[
